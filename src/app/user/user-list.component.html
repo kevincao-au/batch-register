@@ -1,0 +1,33 @@
+<div id="usersDiv" class="col-md-6" *ngIf="users.length > 0">
+<h2>User List</h2>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Roles</th>
+    <th>FirstName</th>
+    <th>LastName</th>
+    <th>Phone</th>
+    <th>Email</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users">
+    <td>{{user.roles}}</td>
+    <td>{{user.firstName}}</td>
+    <td>{{user.lastName}}</td>
+    <td>{{user.phone}}</td>
+    <td>{{user.email}}</td>
+  </tr>
+  </tbody>
+  <tfoot *ngIf="users.length >= submitLimit">
+    <tr>
+      <td colspan="5"><button (click)="submitBatch()">Submit</button></td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+
+<div id="messageDiv" *ngIf="success">
+       <h3>{{afterSubmissionMessage}}</h3> 	
+</div>
+

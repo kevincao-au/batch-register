@@ -1,0 +1,55 @@
+
+<div class="col-md-6">
+
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="roles">Roles:</label>
+        <select formControlName="roles" class="form-control" [ngClass]="{ 'is-invalid': added && f.roles.errors }" id="roles">
+          <option *ngFor="let role of userRoles" value={{role}}>
+              {{role}}
+          </option>
+        </select>
+        <div *ngIf="added && f.roles.errors" class="invalid-feedback">
+            <div *ngIf="f.roles.errors.required">Role is required</div>
+          </div>
+      </div>
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" formControlName="firstName" placeholder="First Name" class="form-control" [ngClass]="{ 'is-invalid': added && f.firstName.errors }" />
+        <div *ngIf="added && f.firstName.errors" class="invalid-feedback">
+          <div *ngIf="f.firstName.errors.required">First Name is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" formControlName="lastName" placeholder="Last Name" class="form-control" [ngClass]="{ 'is-invalid': added && f.lastName.errors }" />
+        <div *ngIf="added && f.lastName.errors" class="invalid-feedback">
+          <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+          <label>Phone</label>
+          <input type="text" formControlName="phone" placeholder="Phone" class="form-control" [ngClass]="{ 'is-invalid': added && f.phone.errors }" />
+          <div *ngIf="added && f.phone.errors" class="invalid-feedback">
+              <div *ngIf="f.phone.errors.required">Phone is required</div>
+              <div *ngIf="f.phone.errors.pattern">Phone must be valid phone number</div>
+          </div>
+      </div>
+      <div class="form-group">
+          <label>Email</label>
+          <input type="text" formControlName="email" placeholder="Email" class="form-control" [ngClass]="{ 'is-invalid': added && f.email.errors }" />
+          <div *ngIf="added && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">Email is required</div>
+              <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+          </div>
+      </div>
+      <div class="form-group">
+          <button [disabled]="submitBatchReady" class="btn btn-primary">Add</button>
+      </div>
+</form>
+</div>
+
+<user-list></user-list>
+  
+  
