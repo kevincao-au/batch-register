@@ -45,11 +45,11 @@
           </div>
       </div>
       <div class="form-group">
-          <button [disabled]="submitBatchReady" class="btn btn-primary">Add</button>
+          <button [disabled]="batchSubmitReady" class="btn btn-primary">Add</button>
       </div>
 </form>
 </div>
 
-<user-list></user-list>
+<user-list (afterSubmitEvent)=receiveAfterSubmit($event)></user-list>
   
   

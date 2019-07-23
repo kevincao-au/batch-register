@@ -1,10 +1,10 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { User } from '../models/user.model';
 import { UserService } from './user.service';
-import {AddUserComponent} from './add-user.component';
-import { EventEmitter } from 'events';
+import { AppConstants} from '../app.constants';
+
 
 @Component({
   selector: 'user-list',
@@ -16,13 +16,16 @@ export class UserListComponent implements OnInit {
 
 
   users: User[];
-  submitLimit: number = 2;
+  submitLimit: number = 5;
   success: boolean = false;
   afterSubmissionMessage: string;
-
- //@Output() messageEvent = new EventEmitter();
   
+  @Output()
+  afterSubmitEvent: EventEmitter<any>;
+
   constructor(private router: Router, private userService: UserService) {
+    this.submitLimit = AppConstants.BATCH_SUBMIT_LIMIT;
+    this.afterSubmitEvent = new EventEmitter<any>();
   }
 
   ngOnInit() {
@@ -33,21 +36,21 @@ export class UserListComponent implements OnInit {
 
   submitBatch() : void {
     //console.log("submit batch");
-    //this.userService.submitUsers(this.users).subscribe( data => {
+    this.userService.submitUsers(this.users).subscribe( data => {
         this.success = true;
-        this.users = this.userService.clearUsers();
         this.afterSubmissionMessage = "Multipe Users Submit Successfully."
-    //}, (err) => {
-    //    this.success = false;
-     //   this.afterSubmissionMessage = "Multipe Users Submit Failed! (" + err + ")"
-    //});
-    
+        this.triggerAfterSubmitEvent(true);
+    }, (err) => {
+        this.success = false;
+        this.afterSubmissionMessage = "Multipe Users Submit Failed! (" + err + ")"
+        this.triggerAfterSubmitEvent(false);
+    });
+        
   }
 
-  // sendMessage() {
-  //     this.messageEvent.emit("okay");
-  // }
-
+  triggerAfterSubmitEvent(success: boolean) {
+    this.afterSubmitEvent.emit(success);
+  }
 
 }
 
